@@ -173,7 +173,7 @@ namespace CalculatorDialerProblem
                 NextOperator(i);
                // return (NextOperator(i));
             }
-            for (int n = 0; n < arrDigit.Length; n++)
+            for (int n = 0; n < arrDigit.Length; n++) //Adding random comments
             {
                 arrComputn[i] = arrDigit[n].ToString();
                 Compute(i);
