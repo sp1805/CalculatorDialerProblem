@@ -4,7 +4,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 
-namespace ConsoleApp2
+namespace CalculatorDialerProblem
 {
     class Program
     {
@@ -25,88 +25,9 @@ namespace ConsoleApp2
             duration =Process.GetCurrentProcess().Threads[0].UserProcessorTime.Subtract(startTime);
 
             Console.WriteLine("The end");
-            Console.WriteLine("Elapsed Time(milliseconds): " + duration.TotalSeconds);
+            Console.WriteLine("Elapsed Time(seconds): " + duration.TotalSeconds);
             Console.ReadKey();
 
-        }
-
-
-        void Compute1(string[] arrComputn)
-        {
-            //DataTable dt = new DataTable();
-            //int answer = (int)dt.Compute(str, "");
-            int Oprnd1 = -999, Oprnd2 = -999;
-            string Oprtr = "";
-
-            for (int i = 0; i < arrComputn.Length; i++)
-            {
-                //if number
-                //*10
-                //int sofar
-                int num1;
-                if (int.TryParse(arrComputn[i], out num1))
-                {
-                    if (Oprtr.Equals(""))
-                    {
-                        if (Oprnd1 != -999)
-                        {
-                            Oprnd1 = int.Parse(arrComputn[i]);
-                        }
-                        else
-                        {
-                            Oprnd1 = (Oprnd1 * 10) + int.Parse(arrComputn[i]);
-                        }
-                    }
-                    else
-                    {
-                        if (Oprnd2 != -999)
-                        {
-                            Oprnd2 = int.Parse(arrComputn[i]);
-                        }
-                        else
-                        {
-                            Oprnd2 = (Oprnd2 * 10) + int.Parse(arrComputn[i]);
-                        }
-                    }
-
-                }
-                else
-                {
-                    Oprtr = arrComputn[i];
-                    continue;
-                }
-
-                switch (arrComputn[i])
-                {
-                    case "+":
-                        Oprtr = "+";
-                        break;
-                    case "-":
-                        Oprtr = "-";
-                        break;
-                    case "*":
-                        Oprtr = "*";
-                        break;
-                    case "/":
-                        Oprtr = "/";
-                        break;
-                    default:
-                        break;
-                }
-
-                if ((Oprnd1 != -999) && (Oprnd2 != -999) && (!Oprtr.Equals("")))
-                {
-                    //CAlcu;late and compare result
-                    //if success then count of touch is i
-                }
-            }
-        }
-
-        bool ComparePrecendence(string Opr1, string Opr2)
-        {
-            if (Opr1.Equals(Opr2))
-                return true;
-            return false;
         }
     }
 
@@ -124,12 +45,12 @@ namespace ConsoleApp2
         char[] arrOpr;
         int[] arrDigit;
         string[] arrComputn;
-        int MinTouch;
-        int tempTouch = 0;
+        int MinTouch=-1;
+        bool possible = false;
 
         public classExample()
         {
-            string[] numbers = { "6", "4", "4", "18" };//Console.ReadLine().Split(",");
+            string[] numbers = { "6", "4", "5", "18" };//Console.ReadLine().Split(",");
             N = Convert.ToInt32(numbers[0]);
             M = Convert.ToInt32(numbers[1]);
             O = Convert.ToInt32(numbers[2]);
@@ -148,7 +69,7 @@ namespace ConsoleApp2
             }
             resultList.Add(temp);
 
-            Console.WriteLine("Result list:");
+            Console.WriteLine("Result list: ");
             foreach (var item in resultList)
             {
                 Console.WriteLine(item);
@@ -157,7 +78,7 @@ namespace ConsoleApp2
             {
                 digitList.Add(Convert.ToInt32(item));
             }
-            Console.WriteLine("Result list:");
+            Console.WriteLine("Digits list:");
             foreach (var item in digitList)
             {
                 Console.WriteLine(item);
@@ -220,7 +141,10 @@ namespace ConsoleApp2
                   //  i = 0;
             }
 
-            Console.WriteLine("MinTouch : " + MinTouch);
+            if (!possible)
+                Console.WriteLine("Not Possible!");
+            else
+                Console.WriteLine("Got it, MinTouch : " + MinTouch);
             foreach (var item in strMinTouch)
             {
                 Console.WriteLine(item);
@@ -277,13 +201,14 @@ namespace ConsoleApp2
             Log(str + " : " + answer);
             if (Convert.ToDouble(result).Equals(answer))
             {
+                possible = true;
                 strMinTouch.Add(str + " : " + answer + " Touch: " + str.Trim().Length);
                 Console.WriteLine("Got It!"); //Log("Got It!");
                 if (str.Trim().Length < MinTouch)
                 {
                     MinTouch = str.Trim().Length;
                     Log("MinTouch :" + MinTouch);
-                   // return true; //Found a new MinTouch
+                    // return true; //Found a new MinTouch
                 }
             }
 
