@@ -178,7 +178,7 @@ namespace CalculatorDialerProblem
                 arrComputn[i] = arrDigit[n].ToString();
                 Compute(i);
                // if (Compute(i))
-                 //   return true;
+                 //   return true; //one more on the row
 
                 if ((i + 1) != (MinTouch))
                 {
